@@ -1,0 +1,21 @@
+<div class="stack">
+    <div class="layer">
+        <div class="layer">
+            <div class="layer">
+                <textarea class="content">{{ text|e }}</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="flag">
+        <a href="/">{{ site_name }}</a>/<a href="javascript:void(0);" id="footer">{{ page|e }}</a>
+    </div>
+</div>
+<pre class="print"></pre>
+<script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+<script src="/static/js/note-update.js"></script>
+<script>
+    document.querySelector("#footer").addEventListener("click", () => {
+        const pathname = decodeURIComponent(window.location.pathname);
+        window.open('/papyrus/saving/txt/' + pathname.substring(1), '_self');
+    });
+</script>

@@ -1,0 +1,59 @@
+<style>
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+    }
+    .title {
+        display: grid;
+        gap: 5vh;
+    }
+    h3 {
+        text-align: center;
+    }
+</style>
+<div class="stack">
+<div class="layer">
+    <div class="layer">
+        <div class="layer">
+            <div class="content">
+                <div class="title">
+                    <h3>'s' stands for share.</h3>
+                    <p>Alternative method: /s/make/page_id</p>
+                </div>
+                <div class="util">
+                    <input type="text" id="page-id" value="">
+                    <input type="button" id="confirm" value="GO">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="flag">
+        <a href="/">{{ site_name }}</a>
+    </div>
+</div>
+<script>
+    var $ = document.querySelector.bind(document);
+    $("#confirm").addEventListener("click", () => {
+        if ($("#page-id").value == "") return;
+        (async () => {
+            let resp;
+            if (
+                (resp =
+                    await (await fetch("/papyrus/share-id/" + $("#page-id").value, {method: "POST",})).json()
+                ).success
+            ) {
+                open(resp.share_id, "_self");
+            }
+            else {
+                alert("Error when trying to communicate with Papyrus API.");
+            }
+        })();
+    });
+    $("#page-id").addEventListener("keydown", e => {
+        if (e.key === "Enter") $("#confirm").click();
+    });
+</script>
